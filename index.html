@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Felices 5 Meses, Mi Amor! 🍊✨</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Poppins:wght@300;400;600;700&family=Sacramento&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        mandarina: {
+                            100: '#FFF3E0',
+                            300: '#FFB74D',
+                            500: '#FF9800',
+                            600: '#F57C00',
+                            700: '#E65100',
+                        },
+                        hoja: {
+                            300: '#A5D6A7',
+                            500: '#66BB6A',
+                            700: '#2E7D32',
+                        },
+                        amor: '#FF6B81',
+                        cieloAzul: '#4A90E2',
+                    },
+                    fontFamily: {
+                        titulo: ['Sacramento', 'cursive'],
+                        subtitulo: ['Caveat', 'cursive'],
+                        cuerpo: ['Poppins', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #fff8f0 0%, #fff0e6 50%, #e8f5e9 100%);
+            overflow-x: hidden;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Lluvia de partículas */
+        .particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 10;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-5vh) rotate(0deg) scale(0.8);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(105vh) rotate(360deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* Animación del Sobre Azul 3D */
+        .envelope-wrapper {
+            perspective: 1000px;
+        }
+
+        .envelope {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            background-color: #3b82f6;
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(59, 130, 246, 0.3);
+            cursor: pointer;
+            transition: transform 0.4s ease;
+        }
+
+        .envelope:hover {
+            transform: translateY(-5px) scale(1.02);
+        }
+
+        .envelope-top {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-top: 110px solid #2563eb;
+            transform-origin: top;
+            transition: transform 0.6s ease-in-out, z-index 0.2s ease;
+            z-index: 5;
+        }
+
+        .envelope-paper {
+            position: absolute;
+            bottom: 10px;
+            left: 15px;
+            width: 270px;
+            height: 180px;
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 2;
+            opacity: 0;
+        }
+
+        .envelope.open .envelope-top {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .envelope.open .envelope-paper {
+            transform: translateY(-130px);
+            opacity: 1;
+            z-index: 10;
+        }
+
+        /* Pulso romántico */
+        @keyframes pulseGlow {
+            0%, 100% { filter: drop-shadow(0 0 10px rgba(255, 152, 0, 0.4)); }
+            50% { filter: drop-shadow(0 0 22px rgba(255, 152, 0, 0.8)); }
+        }
+
+        .glow-mandarina {
+            animation: pulseGlow 3s infinite ease-in-out;
+        }
+
+        /* Notas musicales flotantes */
+        @keyframes floatNote {
+            0% { transform: translateY(0px) rotate(0deg); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-80px) rotate(20deg); opacity: 0; }
+        }
+
+        .floating-note {
+            position: absolute;
+            animation: floatNote 3s infinite ease-in-out;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fff3e0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ffb74d;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #f57c00;
+        }
+    </style>
+</head>
+<body class="text-gray-800 min-h-screen flex flex-col items-center justify-between relative selection:bg-mandarina-300 selection:text-white">
+
+    <!-- Contenedor para efectos flotantes de fondo -->
+    <div id="particle-container"></div>
+
+    <!-- Header / Banner Principal -->
+    <header class="w-full text-center pt-10 pb-6 px-4 max-w-4xl mx-auto relative z-20">
+        <div class="inline-block bg-emerald-100 text-emerald-800 text-sm font-semibold px-4 py-1.5 rounded-full mb-4 shadow-sm border border-emerald-200">
+            🍃 5 Meses a tu lado 🍊
+        </div>
+        <h1 class="font-titulo text-6xl md:text-8xl text-mandarina-600 drop-shadow-md mb-2">
+            ¡Feliz Aniversario mi vida!
+        </h1>
+        <p class="font-subtitulo text-2xl md:text-3xl text-gray-700">
+            "Eres mi persona favorita y mi mandarina más dulce"
+        </p>
+    </header>
+
+    <!-- Sección Ilustración Principal: Mandarinitas Enamoradas (SVG) -->
+    <section class="my-6 px-4 text-center z-20 w-full max-w-md">
+        <div class="bg-white/80 backdrop-blur-sm p-6 rounded-3xl shadow-xl border-2 border-mandarina-300 relative glow-mandarina transition-transform hover:scale-105 duration-300">
+            
+            <!-- SVG Dibujo Mandarinitas -->
+            <svg class="w-full h-auto max-h-64 mx-auto" viewBox="0 0 400 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Sombra de fondo -->
+                <ellipse cx="200" cy="220" rx="140" ry="15" fill="#e2e8f0" />
+
+                <!-- Mandarina 1 (Él/Ella) -->
+                <g id="mandarina-left">
+                    <circle cx="150" cy="140" r="65" fill="#FF9800"/>
+                    <circle cx="150" cy="140" r="61" fill="#FFA726"/>
+                    <!-- Hojas verdes -->
+                    <path d="M 150 75 C 130 50, 110 60, 125 80 Z" fill="#4CAF50"/>
+                    <path d="M 150 75 C 170 50, 190 60, 175 80 Z" fill="#66BB6A"/>
+                    <line x1="150" y1="75" x2="150" y2="85" stroke="#388E3C" stroke-width="4"/>
+                    <!-- Carita sonriente -->
+                    <circle cx="132" cy="130" r="6" fill="#3E2723"/>
+                    <circle cx="168" cy="130" r="6" fill="#3E2723"/>
+                    <!-- Rosado en cachetes -->
+                    <ellipse cx="123" cy="142" rx="7" ry="5" fill="#FF8A80" opacity="0.8"/>
+                    <ellipse cx="177" cy="142" rx="7" ry="5" fill="#FF8A80" opacity="0.8"/>
+                    <!-- Sonrisa -->
+                    <path d="M 142 148 Q 150 158 158 148" stroke="#3E2723" stroke-width="3" stroke-linecap="round" fill="none"/>
+                    <!-- Brillo de ojo -->
+                    <circle cx="130" cy="128" r="2" fill="white"/>
+                    <circle cx="166" cy="128" r="2" fill="white"/>
+                </g>
+
+                <!-- Mandarina 2 (Ella/Él con moñito o flor) -->
+                <g id="mandarina-right">
+                    <circle cx="250" cy="145" r="58" fill="#FF9800"/>
+                    <circle cx="250" cy="145" r="54" fill="#FFB74D"/>
+                    <!-- Hojas verdes -->
+                    <path d="M 250 87 C 235 65, 220 75, 232 92 Z" fill="#4CAF50"/>
+                    <path d="M 250 87 C 265 65, 280 75, 268 92 Z" fill="#81C784"/>
+                    <!-- Carita sonriente con ojos guiñando o cerrados adorables -->
+                    <path d="M 230 138 Q 237 130 244 138" stroke="#3E2723" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+                    <path d="M 260 138 Q 267 130 274 138" stroke="#3E2723" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+                    <!-- Rosado en cachetes -->
+                    <ellipse cx="225" cy="146" rx="6" ry="4" fill="#FF8A80" opacity="0.85"/>
+                    <ellipse cx="279" cy="146" rx="6" ry="4" fill="#FF8A80" opacity="0.85"/>
+                    <!-- Sonrisa -->
+                    <path d="M 246 150 Q 252 158 258 150" stroke="#3E2723" stroke-width="3" stroke-linecap="round" fill="none"/>
+                    <!-- Florcita dulce -->
+                    <circle cx="272" cy="100" r="7" fill="#FFF" />
+                    <circle cx="272" cy="100" r="3" fill="#FFD54F" />
+                </g>
+
+                <!-- Corazón sobre ellas -->
+                <path d="M 200 80 C 200 70, 185 60, 175 72 C 165 60, 150 70, 150 80 C 150 100, 200 120, 200 120 C 200 120, 250 100, 250 80 C 250 70, 235 60, 225 72 C 215 60, 200 70, 200 80 Z" fill="#FF4081" transform="translate(0, -20) scale(0.4) translate(300, 20)">
+                    <animateTransform attributeName="transform" type="translate" values="0,-10; 0,-25; 0,-10" dur="2s" repeatCount="indefinite" />
+                </path>
+                
+                <!-- Destellos pequeños -->
+                <circle cx="100" cy="80" r="3" fill="#FFD54F"/>
+                <circle cx="310" cy="110" r="4" fill="#FFD54F"/>
+            </svg>
+
+            <p class="mt-2 text-sm font-semibold text-mandarina-700 bg-mandarina-100 py-1.5 px-3 rounded-full inline-block">
+                🍊 "Juntitos somos la combinación más dulce" 🌿
+            </p>
+        </div>
+    </section>
+
+    <!-- Contador Interactivo de Días/Meses -->
+    <section class="w-full max-w-2xl px-4 my-4 z-20">
+        <div class="bg-white/90 backdrop-blur-md rounded-2xl p-6 shadow-lg border border-orange-100 text-center">
+            <h2 class="font-subtitulo text-3xl text-mandarina-700 font-bold mb-3">
+                Llevamos compartiendo sonrisas...
+            </h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-center">
+                <div class="bg-gradient-to-b from-orange-50 to-orange-100 p-3 rounded-xl border border-orange-200">
+                    <span id="counter-months" class="text-3xl md:text-4xl font-bold text-mandarina-600 block">5</span>
+                    <span class="text-xs text-gray-600 font-medium uppercase tracking-wider">Meses</span>
+                </div>
+                <div class="bg-gradient-to-b from-orange-50 to-orange-100 p-3 rounded-xl border border-orange-200">
+                    <span id="counter-days" class="text-3xl md:text-4xl font-bold text-mandarina-600 block">152</span>
+                    <span class="text-xs text-gray-600 font-medium uppercase tracking-wider">Días</span>
+                </div>
+                <div class="bg-gradient-to-b from-orange-50 to-orange-100 p-3 rounded-xl border border-orange-200">
+                    <span id="counter-hours" class="text-3xl md:text-4xl font-bold text-mandarina-600 block">3,648</span>
+                    <span class="text-xs text-gray-600 font-medium uppercase tracking-wider">Horas</span>
+                </div>
+                <div class="bg-gradient-to-b from-orange-50 to-orange-100 p-3 rounded-xl border border-orange-200">
+                    <span id="counter-moments" class="text-3xl md:text-4xl font-bold text-mandarina-600 block">∞</span>
+                    <span class="text-xs text-gray-600 font-medium uppercase tracking-wider">Recuerdos</span>
+                </div>
+            </div>
+            <button onclick="triggerLoveBurst()" class="mt-5 bg-gradient-to-r from-mandarina-500 to-amber-500 hover:from-mandarina-600 hover:to-amber-600 text-white font-semibold py-2.5 px-6 rounded-full shadow-md transition-all transform hover:scale-105 active:scale-95 text-sm flex items-center justify-center gap-2 mx-auto">
+                <i class="fa-solid font-heart text-white"></i> ¡Enviar un abrazo de mandarinas! 🍊
+            </button>
+        </div>
+    </section>
+
+    <!-- Tarjeta Cantares 4:7 -->
+    <section class="w-full max-w-xl px-4 my-6 z-20">
+        <div class="relative bg-gradient-to-r from-amber-50 via-orange-50 to-emerald-50 p-8 rounded-3xl shadow-xl border-2 border-emerald-200/60 text-center overflow-hidden">
+            <!-- Detalles decorativos hojitas en esquinas -->
+            <div class="absolute top-2 left-2 text-hoja-500 text-xl opacity-60">🌿</div>
+            <div class="absolute bottom-2 right-2 text-hoja-500 text-xl opacity-60">🌿</div>
+            
+            <i class="fa-solid fa-quote-left text-mandarina-300 text-3xl mb-2 block"></i>
+            <h3 class="font-subtitulo text-3xl text-gray-800 font-bold mb-2">
+                Cantares 4:7
+            </h3>
+            <p class="font-titulo text-3xl md:text-4xl text-mandarina-700 leading-relaxed my-3">
+                "Toda tú eres bella, amada mía; no hay en ti defecto alguno."
+            </p>
+            <div class="w-16 h-0.5 bg-emerald-400 mx-auto my-3 rounded-full"></div>
+            <p class="text-xs text-emerald-800 italic font-medium">
+                Un recordatorio de lo especial y perfecta que eres para mí cada día.
+            </p>
+        </div>
+    </section>
+
+    <!-- Sección de la Canción: "Te Amo y Más" (El Libro de la Vida) -->
+    <section class="w-full max-w-2xl px-4 my-6 z-20">
+        <div class="bg-white/90 backdrop-blur-md rounded-3xl p-6 md:p-8 shadow-xl border border-orange-100 relative overflow-hidden">
+            
+            <!-- Encabezado de la canción -->
+            <div class="flex flex-col md:flex-row items-center gap-4 border-b border-gray-100 pb-4 mb-4">
+                <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-amber-400 to-mandarina-500 flex items-center justify-center text-white shadow-lg text-2xl flex-shrink-0">
+                    <i class="fa-solid fa-music"></i>
+                </div>
+                <div class="text-center md:text-left flex-1">
+                    <span class="bg-orange-100 text-mandarina-700 text-xs px-2.5 py-1 rounded-full font-semibold">
+                        Nuestra Canción Especial
+                    </span>
+                    <h3 class="font-subtitulo text-3xl text-gray-800 font-bold mt-1">
+                        Te Amo y Más
+                    </h3>
+                    <p class="text-xs text-gray-500">Del Libro de la Vida</p>
+                </div>
+                <button id="music-btn" onclick="toggleSongLyrics()" class="bg-emerald-500 hover:bg-emerald-600 text-white py-2 px-4 rounded-xl text-xs font-semibold shadow transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-heart"></i> <span id="btn-text">Ver Letra Completa</span>
+                </button>
+            </div>
+
+            <!-- Previsualización de la letra (Extracto principal destacado) -->
+            <div class="bg-orange-50/60 p-4 rounded-2xl border border-orange-100 text-center my-3">
+                <p class="font-titulo text-2xl md:text-3xl text-mandarina-700">
+                    "Le ruego a Dios tenerte a mi lado...<br>Y lo que siento por ti, ¡te amo y más!"
+                </p>
+            </div>
+
+            <!-- Letra Completa Desplegable -->
+            <div id="lyrics-container" class="hidden transition-all duration-500 ease-in-out mt-4 text-center text-gray-700 text-sm leading-relaxed max-h-96 overflow-y-auto pr-2">
+                <p class="italic text-xs text-emerald-600 font-semibold mb-3">🎵 Letra de nuestra melodía favorita 🎵</p>
+                <p class="mb-3">
+                    Te amo y más, más de lo que puedes imaginar,<br>
+                    Te amo más que al mismo sol que nos da su luz.<br>
+                    Te amo más que a las estrellas en el firmamento,<br>
+                    Te amo y más, ¡mucho más que a mi propia vida!
+                </p>
+                <p class="mb-3 font-semibold text-mandarina-600">
+                    Le ruego a Dios tenerte a mi lado,<br>
+                    Para cuidar de ti y amarte siempre.<br>
+                    Si tú me miras, el mundo es más claro,<br>
+                    Y no hay nada más dulce que tu sonrisa.
+                </p>
+                <p class="mb-3">
+                    Siento que el tiempo se detiene cuando estás junto a mí,<br>
+                    Que mi corazón late solo por hacerte feliz.<br>
+                    Te amo y más, más allá de lo explicable,<br>
+                    Eres mi regalo más bonito.
+                </p>
+                <p class="text-xs text-gray-400 mt-4">✨ Cantado con todo mi corazón para ti ✨</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- El Sobre Azul 3D / Sorpresa Final -->
+    <section class="w-full max-w-md px-4 my-10 z-20 text-center">
+        <h3 class="font-subtitulo text-4xl text-mandarina-700 font-bold mb-2">
+            Una Sorpresa Especial 💙
+        </h3>
+        <p class="text-xs text-gray-600 mb-6">
+            Toca el sobre azul para descubrirlo...
+        </p>
+
+        <div class="envelope-wrapper flex justify-center items-center my-4">
+            <div id="envelope" class="envelope" onclick="openEnvelope()">
+                <div class="envelope-top"></div>
+                <!-- Papel que sale del sobre -->
+                <div class="envelope-paper flex flex-col justify-between items-center text-center">
+                    <div class="text-emerald-600 text-xl font-bold">🍊 5 Meses 🍊</div>
+                    <p class="font-titulo text-2xl md:text-3xl text-blue-600 font-bold leading-tight">
+                        "Y falta una sorpresa más..."
+                    </p>
+                    <div class="bg-blue-50 text-blue-800 text-xs py-1.5 px-3 rounded-lg font-medium border border-blue-200">
+                        💙 Reclama tu sobre
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botón que aparece tras abrir -->
+        <div id="surprise-action" class="hidden mt-8 transition-all duration-500">
+            <button onclick="claimSurprise()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transform hover:scale-105 transition-all text-sm flex items-center justify-center gap-2 mx-auto">
+                <i class="fa-solid fa-gift"></i> ¡sobre en camino...!
+            </button>
+        </div>
+    </section>
+
+    <!-- Modal / Alerta Adorable para reclamo de regalo -->
+    <div id="modal-claim" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl p-6 max-w-sm w-full text-center shadow-2xl border-2 border-mandarina-300 transform transition-all scale-95" id="modal-card">
+            <div class="text-5xl mb-3">🍊💙</div>
+            <h4 class="font-subtitulo text-3xl text-mandarina-700 font-bold mb-2">¡Vale por un Abrazo y el Sobre Real!</h4>
+            <p class="text-gray-600 text-sm mb-4">
+                Has reclamado exitosamente tu sobre físico. Prepárate para recibirlo muy pronto con un besito extra.
+            </p>
+            <button onclick="closeModal()" class="bg-mandarina-500 hover:bg-mandarina-600 text-white font-semibold py-2 px-6 rounded-full text-sm shadow">
+                ¡Entendido, mi amor! 🥰
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="w-full text-center py-6 text-xs text-gray-500 z-20 border-t border-orange-100/60 bg-white/40">
+        <p>Hecho con todo el amor del mundo para vos 🍊🍃</p>
+        <p class="mt-1 text-mandarina-600 font-semibold">Felices 5 Meses juntos</p>
+    </footer>
+
+    <!-- Lógica en JavaScript -->
+    <script>
+        // 1. Generador de Partículas Flotantes (Lluvia de mandarinas, hojas y corazones)
+        function createParticle() {
+            const container = document.getElementById('particle-container');
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            
+            // Variedad de elementos
+            const items = ['🍊', '🌿', '🧡', '✨', '🍃', '💖'];
+            particle.innerText = items[Math.floor(Math.random() * items.length)];
+            
+            // Posición y tamaño aleatorios
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.fontSize = (Math.random() * 18 + 14) + 'px';
+            
+            // Duración aleatoria de caída
+            const duration = Math.random() * 4 + 4;
+            particle.style.animationDuration = duration + 's';
+            
+            container.appendChild(particle);
+
+            // Eliminar elemento después de caer
+            setTimeout(() => {
+                particle.remove();
+            }, duration * 1000);
+        }
+
+        // Crear partículas continuas
+        setInterval(createParticle, 450);
+
+        // 2. Ráfaga de amor al presionar el botón
+        function triggerLoveBurst() {
+            for (let i = 0; i < 25; i++) {
+                setTimeout(createParticle, i * 50);
+            }
+        }
+
+        // 3. Abrir / Cerrar Sobre Azul
+        let envelopeOpened = false;
+        function openEnvelope() {
+            const envelope = document.getElementById('envelope');
+            const surpriseAction = document.getElementById('surprise-action');
+            
+            envelope.classList.toggle('open');
+            envelopeOpened = !envelopeOpened;
+
+            if (envelopeOpened) {
+                setTimeout(() => {
+                    surpriseAction.classList.remove('hidden');
+                }, 600);
+                triggerLoveBurst();
+            }
+        }
+
+        // 4. Mostrar u Ocultar Letra Completa de la Canción
+        function toggleSongLyrics() {
+            const lyrics = document.getElementById('lyrics-container');
+            const btnText = document.getElementById('btn-text');
+            
+            if (lyrics.classList.contains('hidden')) {
+                lyrics.classList.remove('hidden');
+                btnText.innerText = "Ocultar Letra";
+            } else {
+                lyrics.classList.add('hidden');
+                btnText.innerText = "Ver Letra Completa";
+            }
+        }
+
+        // 5. Modal de Reclamo
+        function claimSurprise() {
+            const modal = document.getElementById('modal-claim');
+            modal.classList.remove('hidden');
+            triggerLoveBurst();
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modal-claim');
+            modal.classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
